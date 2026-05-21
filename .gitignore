@@ -1,0 +1,34 @@
+# Datos — nunca subir al repo (pueden ser gigas)
+data/raw/
+data/sft/
+data/dpo/
+data/processed/
+
+# Credenciales
+.env
+*.env
+secrets.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# PDFs descargados (subir solo los scripts, no los archivos)
+*.pdf
+*.PDF
+
+# Archivos pesados
+*.csv
+*.jsonl
+*.parquet
+
+# OS
+.DS_Store
+Thumbs.db
