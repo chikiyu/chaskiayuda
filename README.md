@@ -1,4 +1,4 @@
-# ChasquiAyuda 🏔️
+# ChaskiAyuda 🏔️
 LLM post-entrenado para navegación de ayuda humanitaria en Perú  
 **SomosNLP Hackathon 2026** · Deadline: 29 mayo
 
@@ -19,7 +19,7 @@ LLM post-entrenado para navegación de ayuda humanitaria en Perú
 ## Estructura del repo
 
 ```
-chasquiayuda/
+chaskiayuda/
 │
 ├── stage_a_extraction/        ← Cada quien trabaja en su carpeta
 │   ├── integrante_1/          Emilio   — ReliefWeb
@@ -47,7 +47,7 @@ chasquiayuda/
 ## Cómo unirte al repo
 
 1. Pedirle a @ayayon que te agregue como colaborador
-2. `git clone https://github.com/ayayon/chasquiayuda.git`
+2. `git clone https://github.com/ayayon/chaskiayuda.git`
 3. Crear tu rama: `git checkout -b stage-a/integrante-X`
 4. Trabajar en tu carpeta `stage_a_extraction/integrante_X/`
 5. Subir: `git add . && git commit -m "..." && git push`
