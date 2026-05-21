@@ -1,38 +1,53 @@
-# Integrante 4 — Programas de Gobierno Peruano
+# Integrante 4 — Maskuyruru · Programas de Gobierno
 
-**Fuente:** MIDIS, MINSA, MINEDU, MIMP, SIS, Pensión 65
-**Método:** Web scraping + descarga de PDFs
-**Output:** `data/raw/gobierno/`
-**Meta:** 50–100 fichas de programas estructuradas
+## Qué te toca extraer
+
+Información sobre los programas estatales que se activan en emergencias.  
+No necesitas código — puedes hacer esto navegando las webs y copiando la info clave.
 
 ## Programas a documentar
 
-Para cada programa, llenar la ficha del script. Navegar cada URL:
+Para cada uno, llenar la ficha de abajo:
 
-| Programa | URL | Qué buscar |
-|---|---|---|
-| MIDIS — Contigo | https://www.midis.gob.pe/index.php/es/programa-contigo | Quién califica, cómo registrarse, transferencias en emergencia |
-| Qali Warma | https://www.qaliwarma.gob.pe | Alimentación escolar en emergencias |
-| MINSA — Emergencias | https://www.minsa.gob.pe/emergencias/ | Protocolos de salud en crisis |
-| MINEDU — Escuelas seguras | https://www.minedu.gob.pe/emergencia/ | Protocolo educativo en desastres |
-| MIMP — Protección mujer | https://www.mimp.gob.pe | Servicios para mujeres en crisis |
-| SIS — Cobertura emergencia | https://www.sis.gob.pe | Qué cubre el seguro en desastres |
-| Pensión 65 en emergencias | https://www.pension65.gob.pe | Adultos mayores en crisis |
-| Bono 350 / transferencias | https://www.gob.pe | Bonos de emergencia históricos |
+| Programa | URL |
+|---|---|
+| MIDIS — Programa Contigo | https://www.midis.gob.pe/index.php/es/programa-contigo |
+| Qali Warma (alimentación) | https://www.qaliwarma.gob.pe |
+| MINSA — Emergencias | https://www.minsa.gob.pe/emergencias/ |
+| MINEDU — Escuelas seguras | https://www.minedu.gob.pe/emergencia/ |
+| SIS — Seguro integral de salud | https://www.sis.gob.pe |
+| Pensión 65 | https://www.pension65.gob.pe |
 
-## Cómo correr
+## Formato de la ficha (una por programa)
 
-```bash
-# Scraping automático de páginas web
-python stage_a_extraction/integrante_4/extract_gobierno.py
+Copiar esto para cada programa y rellenarlo:
 
-# Solo scraping (sin fichas manuales)
-python stage_a_extraction/integrante_4/extract_gobierno.py --modo web
 ```
+PROGRAMA: [nombre completo]
+MINISTERIO: [MIDIS / MINSA / MINEDU / etc.]
+QUIÉN CALIFICA: [quiénes pueden acceder]
+CÓMO ACCEDER: [pasos concretos para registrarse o recibir la ayuda]
+QUÉ RECIBEN: [qué entrega el programa exactamente]
+CONTACTO: [teléfono, web, app]
+EN EMERGENCIA: [qué pasa con este programa cuando hay desastre declarado]
+```
+
+## Formato de salida
+
+Un archivo `programas_gobierno.jsonl` con una entrada por programa:
+```json
+{"id": "midis-contigo", "fuente": "gobierno_peruano", "programa": "Programa Contigo", "texto": "El Programa Contigo del MIDIS..."}
+```
+
+O si es más fácil, un archivo `.txt` o `.md` con todas las fichas — el equipo lo convierte después.
+
+## Dónde subir los datos
+
+**Google Drive del equipo** → carpeta `data/raw/gobierno/`
 
 ## Checklist
 
-- [ ] Al menos 6 programas documentados con ficha completa
-- [ ] Cada ficha tiene: nombre, quién califica, cómo acceder, contacto
-- [ ] Script de scraping web corrido
-- [ ] Output en `data/raw/gobierno/gobierno.jsonl`
+- [ ] Al menos 5 programas documentados con ficha completa
+- [ ] Cada ficha tiene número de contacto real y pasos concretos
+- [ ] Archivo subido al Drive
+- [ ] README actualizado con lista de programas cubiertos

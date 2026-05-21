@@ -1,29 +1,37 @@
 # Stage B — Dataset SFT
 
-**Entrada:** `data/raw/` (output de todos los integrantes de Stage A)
-**Salida:** `data/sft/sft_dataset.jsonl` + subido a HuggingFace
-**Meta:** 2,000–3,000 pares instrucción→respuesta de calidad
+**Entrada:** archivos `.jsonl` de todos los integrantes de Stage A  
+**Salida:** dataset de pares instrucción→respuesta subido a HuggingFace  
+**Meta:** 2,000–3,000 pares de calidad  
+**Responsables:** Emilio + Raven99 (+ apoyo de Maskuyruru)
 
-## Proceso
+## Qué hay que hacer
 
+1. Tomar los textos crudos de Stage A
+2. Usar un LLM (Claude API o GPT-4o-mini) para generar 3 pares por texto
+3. Revisar y filtrar en Google Sheets (calidad 1/2/3)
+4. Subir el dataset limpio a HuggingFace Hub
+
+## Formato del dataset final
+
+```json
+{
+  "messages": [
+    {"role": "user",       "content": "Hubo inundaciones en Piura, ¿qué ayuda hay?"},
+    {"role": "assistant",  "content": "Hay varias opciones: (1) INDECI línea 115..."}
+  ]
+}
 ```
-1. generate_sft_pairs.py   → LLM genera pares desde los textos crudos
-2. Revisión en Google Sheets (filtrar calidad 1/2/3)
-3. upload_to_hf.py         → subir dataset limpio a HuggingFace
-```
 
-## Criterios de calidad para la revisión
+## Script de generación
 
-- **3 — Incluir:** respuesta da pasos concretos + recursos peruanos reales
-- **2 — Editar:** información correcta pero vaga o muy corta → mejorar y incluir
-- **1 — Descartar:** burocrático, incorrecto, no aplica a Perú
+Pendiente — se agrega aquí cuando Stage A esté completo.  
+Ver `pipeline-completo.md` para el prompt de generación.
 
-## Cómo correr
+## Criterios de revisión en Google Sheets
 
-```bash
-# Necesita ANTHROPIC_API_KEY en .env
-python stage_b_sft/generate_sft_pairs.py
-
-# Subir a HuggingFace (necesita HF_TOKEN en .env)
-python stage_b_sft/upload_to_hf.py
-```
+| Calidad | Criterio | Acción |
+|---|---|---|
+| 3 — Bueno | Da pasos concretos + recursos peruanos reales | Incluir |
+| 2 — Mejorable | Correcto pero vago o corto | Editar y incluir |
+| 1 — Descartar | Burocrático, incorrecto, no aplica a Perú | Eliminar |

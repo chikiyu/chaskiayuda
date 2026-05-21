@@ -1,33 +1,33 @@
-# Datos — nunca subir al repo (pueden ser gigas)
-data/raw/
-data/sft/
-data/dpo/
-data/processed/
+# Datos — pesados, no van en GitHub
+data/raw/**
+data/sft/**
+data/dpo/**
+data/processed/**
+!data/**/.gitkeep
 
-# Credenciales
+# PDFs descargados
+*.pdf
+*.PDF
+
+# Archivos de datos
+*.jsonl
+*.csv
+*.parquet
+*.xlsx
+
+# Credenciales — NUNCA subir
 .env
-*.env
 secrets.json
+*.key
 
 # Python
 __pycache__/
 *.py[cod]
-*.egg-info/
 .venv/
 venv/
-env/
 
-# Jupyter checkpoints
+# Jupyter
 .ipynb_checkpoints/
-
-# PDFs descargados (subir solo los scripts, no los archivos)
-*.pdf
-*.PDF
-
-# Archivos pesados
-*.csv
-*.jsonl
-*.parquet
 
 # OS
 .DS_Store

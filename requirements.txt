@@ -1,30 +1,25 @@
-# Extracción (Stage A)
-requests==2.32.3
-pdfplumber==0.11.4
-pandas==2.2.2
-tqdm==4.66.4
-python-dotenv==1.0.1
-beautifulsoup4==4.12.3
+# Instalar con: pip install -r requirements.txt
 
-# Generación de pares (Stage B y C)
-anthropic==0.34.2
-openai==1.45.0
+# Stage A — Extracción
+requests
+pdfplumber
+pandas
+beautifulsoup4
+tqdm
+python-dotenv
 
-# Dataset HuggingFace (Stage B, C, D)
-datasets==2.21.0
-huggingface_hub==0.24.6
+# Stage B y C — Generación con LLM
+anthropic
+datasets
+huggingface_hub
 
-# Entrenamiento (Stage D)
-transformers==4.44.2
-trl==0.10.1
-peft==0.12.0
-bitsandbytes==0.43.3
-accelerate==0.34.2
-torch==2.4.0
+# Stage D — Entrenamiento (solo quien entrena)
+# transformers
+# trl
+# peft
+# bitsandbytes
+# accelerate
+# torch
 
-# Demo (Stage E)
-gradio==4.43.0
-
-# Evaluación
-evaluate==0.4.3
-rouge_score==0.1.2
+# Stage E — Demo
+# gradio

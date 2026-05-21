@@ -1,95 +1,60 @@
 # ChasquiAyuda 🏔️
-**LLM post-entrenado para navegación de ayuda humanitaria en Perú**
-SomosNLP Hackathon 2026 · ODS 1 · 2 · 10 · 16
+LLM post-entrenado para navegación de ayuda humanitaria en Perú  
+**SomosNLP Hackathon 2026** · Deadline: 29 mayo
 
 ---
 
-## ¿Qué es?
+## Equipo y responsabilidades
 
-ChasquiAyuda es un modelo de lenguaje post-entrenado (SFT + DPO) que ayuda a personas en situación de crisis a navegar el ecosistema de ayuda humanitaria en Perú. Responde con información accionable: qué ayuda existe, quién la brinda, y cómo acceder a ella.
-
-**Ejemplo:**
-> *"Hubo inundaciones en mi comunidad en Piura, perdimos todo. Escuché que hay ayuda pero no sé dónde ir."*
->
-> *"Hay varias rutas simultáneas: (1) INDECI línea 115 — gratuita, 24h... (2) Cruz Roja Peruana — busca sus carpas de registro... (3) MIDIS activa el programa Contigo — el registro es siempre gratuito..."*
-
----
-
-## Equipo
-
-| Handle | Rol en el proyecto |
-|---|---|
-| @ayayon | Coordinación + Stage D (ML) |
-| @Emilio | Stage A — Integrante 1 (ReliefWeb) |
-| @Raven99 | Stage A — Integrante 2 (INDECI) |
-| @Fran | Stage A — Integrante 3 (Sphere) |
-| @Maskuyruru | Stage A — Integrante 4/5 (Gobierno + ONGs) |
+| Integrante | Extracción (Stage A) | Stage siguiente |
+|---|---|---|
+| @ayayon | — | Stage D — Entrenamiento |
+| @Emilio | ReliefWeb API | Stage B — SFT |
+| @Raven99 | INDECI | Stage B — SFT |
+| @Fran | Sphere Handbook | Stage C — DPO |
+| @Maskuyruru | Gobierno + ONGs/HDX | Stage B — SFT |
 
 ---
 
-## Estructura del repositorio
+## Estructura del repo
 
 ```
 chasquiayuda/
-├── stage_a_extraction/     # Extracción de fuentes (cada integrante tiene su carpeta)
-│   ├── integrante_1/       # ReliefWeb API → reportes humanitarios Perú
-│   ├── integrante_2/       # INDECI → guías y datos de emergencias
-│   ├── integrante_3/       # Sphere Handbook → estándares internacionales
-│   ├── integrante_4/       # Programas gobierno (MIDIS, MINSA, MINEDU...)
-│   └── integrante_5/       # ONGs + HDX + CENEPRED/SIGRID
-├── stage_b_sft/            # Generación y curaduría del dataset SFT
-├── stage_c_dpo/            # Generación y curaduría del dataset DPO
-├── stage_d_training/       # Fine-tuning SFT → DPO + evaluación
-├── stage_e_demo/           # App Gradio para HuggingFace Spaces
-├── utils/                  # Funciones compartidas entre stages
-├── notebooks/              # Exploración y análisis
-├── data/                   # ⚠️ EN .gitignore — no se sube al repo
-│   ├── raw/                # Datos crudos extraídos por cada integrante
-│   ├── sft/                # Dataset SFT listo para entrenar
-│   └── dpo/                # Dataset DPO listo para entrenar
-├── .env.example            # Plantilla de variables de entorno
-└── requirements.txt        # Dependencias del proyecto
+│
+├── stage_a_extraction/        ← Cada quien trabaja en su carpeta
+│   ├── integrante_1/          Emilio   — ReliefWeb
+│   ├── integrante_2/          Raven99  — INDECI
+│   ├── integrante_3/          Fran     — Sphere Handbook
+│   ├── integrante_4/          Maskuyruru — Programas gobierno
+│   └── integrante_5/          Maskuyruru — ONGs + HDX
+│
+├── stage_b_sft/               Generación del dataset SFT
+├── stage_c_dpo/               Generación del dataset DPO
+├── stage_d_training/          Entrenamiento del modelo
+├── stage_e_demo/              Demo Gradio para HF Spaces
+│
+├── data/                      ⚠️  NO se sube al repo (.gitignore)
+│   ├── raw/                   Datos crudos de Stage A
+│   ├── sft/                   Dataset SFT listo
+│   └── dpo/                   Dataset DPO listo
+│
+├── .env.example               Plantilla de credenciales
+└── requirements.txt           Dependencias
 ```
 
 ---
 
-## Setup inicial
+## Cómo unirte al repo
 
-```bash
-git clone https://github.com/ChasquiAyuda/chasquiayuda.git
-cd chasquiayuda
-
-python -m venv venv
-source venv/bin/activate        # Linux/Mac
-# venv\Scripts\activate         # Windows
-
-pip install -r requirements.txt
-
-cp .env.example .env
-# Editar .env con las keys reales (pedir al coordinador del equipo)
-```
+1. Pedirle a @ayayon que te agregue como colaborador
+2. `git clone https://github.com/ayayon/chasquiayuda.git`
+3. Crear tu rama: `git checkout -b stage-a/integrante-X`
+4. Trabajar en tu carpeta `stage_a_extraction/integrante_X/`
+5. Subir: `git add . && git commit -m "..." && git push`
 
 ---
 
-## Pipeline de datos
+## Regla de oro
 
-```
-Stage A: Extracción  →  Stage B: SFT  →  Stage D: Training
-                     →  Stage C: DPO  ↗
-                                         ↓
-                                      Stage E: Demo
-```
-
-Ver el [pipeline completo](../somos%20NLP/pipeline-completo.md) para el detalle de cada stage.
-
----
-
-## Recursos HuggingFace
-
-- Dataset: `ChasquiAyuda/chasquiayuda-dataset` *(pendiente)*
-- Modelo: `ChasquiAyuda/chasquiayuda-model` *(pendiente)*
-- Demo: `ChasquiAyuda/chasquiayuda-demo` *(pendiente)*
-
----
-
-## Deadline: 29 mayo 2026
+**Los datos no van en el repo.** Solo van los scripts, READMEs y reportes.  
+Los archivos de datos (`.jsonl`, `.csv`, `.pdf`) van en el Google Drive del equipo.

@@ -1,39 +1,47 @@
-# Integrante 5 — ONGs + HDX + CENEPRED/SIGRID
+# Integrante 5 — Maskuyruru · ONGs + HDX + CENEPRED
 
-**Fuente:** Cruz Roja Peruana, Cáritas, HDX datasets, CENEPRED
-**Método:** Web scraping + descarga CSV de HDX + CENEPRED PDFs
-**Output:** `data/raw/ongs_hdx/`
-**Meta:** 20–40 documentos + 3-5 CSVs de HDX útiles
+## Qué te toca extraer
 
-## Fuentes a cubrir
+Contenido de organizaciones humanitarias que operan en Perú + datasets de HDX.
 
-| Fuente | URL | Qué extraer |
+## Fuentes web a scrapear / copiar
+
+Navegar cada URL y copiar el contenido relevante sobre respuesta a emergencias en Perú:
+
+| Organización | URL | Qué buscar |
 |---|---|---|
-| Cruz Roja Peruana | https://www.cruzroja.org.pe | Guías primeros auxilios, respuesta desastres, contactos |
-| Cáritas Perú | https://www.caritasperu.org.pe | Ayuda humanitaria sociedad civil, programas |
-| WFP Perú | https://www.wfp.org/countries/peru | Seguridad alimentaria, distribución en emergencias |
-| CENEPRED publicaciones | https://www.cenepred.gob.pe/web/publicaciones/ | Evaluación riesgos por región |
-| HDX — Perú crisis | https://data.humdata.org (buscar "Peru") | CSVs con datos estructurados |
+| Cruz Roja Peruana | https://www.cruzroja.org.pe | Servicios, líneas, guías de respuesta |
+| Cáritas Perú | https://www.caritasperu.org.pe | Programas de ayuda humanitaria |
+| WFP Perú | https://www.wfp.org/countries/peru | Seguridad alimentaria en emergencias |
 | CARE Perú | https://www.care.org.pe | Respuesta comunitaria |
+| CENEPRED publicaciones | https://www.cenepred.gob.pe/web/publicaciones/ | Evaluación de riesgos por región |
 
-## HDX — Cómo filtrar los datasets útiles
+## HDX — Datasets estructurados
 
-En `data.humdata.org`, buscar "Peru" y priorizar datasets con:
-- ✅ Formato CSV (descargable directo)
-- ✅ Columnas con texto descriptivo (no solo números)
-- ✅ Actualizado después de 2018
-- ✅ Relacionado con: emergencias, personas afectadas, distribución de ayuda
-- ❌ Descartar: solo coordenadas, solo IDs, solo estadísticas sin contexto
+1. Ir a https://data.humdata.org
+2. Buscar: `Peru emergency` o `Peru humanitarian`
+3. Filtrar por: formato CSV, actualizado después de 2018
+4. Descargar los 3-5 más relevantes
+5. Abrirlos y anotar qué columnas tienen texto útil (no solo números)
 
-## Cómo correr
+**Lo que buscamos en los CSV de HDX:**
+- Columnas con descripciones de tipo de ayuda distribuida
+- Organizaciones que respondieron a qué crisis
+- Regiones afectadas con descripción de la situación
 
-```bash
-python stage_a_extraction/integrante_5/extract_ongs_hdx.py
-```
+## Formato de salida
+
+Para webs: un archivo `ongs.jsonl` con el texto extraído de cada organización  
+Para HDX: los CSV descargados + un `hdx_resumen.md` explicando qué tiene cada uno
+
+## Dónde subir los datos
+
+**Google Drive del equipo** → carpeta `data/raw/ongs_hdx/`
 
 ## Checklist
 
-- [ ] Cruz Roja Peruana — al menos 3 páginas de contenido extraído
-- [ ] HDX — al menos 3 CSVs descargados y explorados
-- [ ] CENEPRED — al menos 2 PDFs procesados
-- [ ] Output en `data/raw/ongs_hdx/`
+- [ ] Cruz Roja Peruana — contenido sobre servicios de emergencia extraído
+- [ ] Al menos 2 ONGs más documentadas
+- [ ] Al menos 3 CSV de HDX descargados y explorados
+- [ ] `hdx_resumen.md` explicando qué hay en cada CSV
+- [ ] README actualizado

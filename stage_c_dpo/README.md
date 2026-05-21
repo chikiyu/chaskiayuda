@@ -1,30 +1,36 @@
 # Stage C — Dataset DPO
 
-**Entrada:** `data/raw/sphere/sphere_chunks.jsonl` (del Integrante 3)
-**Salida:** `data/dpo/dpo_dataset.jsonl` + subido a HuggingFace
-**Meta:** 600–800 pares chosen/rejected revisados manualmente
+**Entrada:** `sphere_estandares_clave.md` del Integrante 3  
+**Salida:** dataset de pares chosen/rejected subido a HuggingFace  
+**Meta:** 600–800 pares revisados manualmente  
+**Responsable:** Fran
 
-## Proceso
+## Qué hay que hacer
 
+1. Usar el Sphere Handbook como fuente del "chosen" (qué es una buena respuesta)
+2. Generar pares con LLM: prompt + chosen (respuesta correcta) + rejected (respuesta burocrática)
+3. Revisar TODOS los pares manualmente — este paso no se puede saltar
+4. Subir a HuggingFace Hub
+
+## Formato del dataset final
+
+```json
+{
+  "prompt":   "No tenemos agua desde las inundaciones. ¿Qué hacemos?",
+  "chosen":   "El mínimo de supervivencia es 3 litros por persona por día. Opciones: (1) INDECI 115...",
+  "rejected": "Debe comunicarse con las autoridades competentes de su localidad."
+}
 ```
-1. generate_dpo_pairs.py  → LLM genera pares desde Sphere Handbook
-2. Revisión manual TODOS los pares (crítico — no saltar este paso)
-3. upload_to_hf.py        → subir a HuggingFace
-```
 
-## Por qué la revisión es obligatoria aquí
+## La diferencia clave chosen vs rejected
 
-En Stage B (SFT) la revisión puede ser rápida. En Stage C (DPO) el contraste
-chosen/rejected debe ser **real y justificable** — si el modelo detecta que
-el rejected es solo peor por razones triviales, no aprende nada útil.
+| Dimensión | Chosen ✅ | Rejected ❌ |
+|---|---|---|
+| Accionabilidad | Pasos numerados y concretos | "Contacte a las autoridades" |
+| Recursos | INDECI 115, Cruz Roja, MIDIS | "organismos competentes" |
+| Tono | Empático, reconoce la situación | Frío y burocrático |
+| Seguimiento | Hace pregunta para precisar ayuda | Termina la conversación |
 
-Criterios de revisión:
-- ¿El `chosen` da información que realmente ayuda a alguien en crisis?
-- ¿El `rejected` es algo que un sistema real podría decir (no una respuesta absurda)?
-- ¿El contraste es claro pero no exagerado?
+## Script de generación
 
-## Cómo correr
-
-```bash
-python stage_c_dpo/generate_dpo_pairs.py
-```
+Pendiente — se agrega cuando Stage A Integrante 3 esté completo.

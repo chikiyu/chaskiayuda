@@ -1,39 +1,58 @@
-# Integrante 1 — ReliefWeb API
+# Integrante 1 — Emilio · ReliefWeb
 
-**Fuente:** ReliefWeb (OCHA, IFRC, UNICEF, otros)
-**Método:** API pública JSON
-**Output:** `data/raw/reliefweb/reliefweb.jsonl`
-**Meta:** 500–2,000 registros con texto completo
+## Qué te toca extraer
 
-## Fuentes a extraer
+Reportes humanitarios sobre Perú en español desde ReliefWeb.  
+Es la fuente más grande — necesitamos 500 a 1,000 textos.
 
-| Organización | Filtro API | Prioridad |
-|---|---|---|
-| OCHA Perú | `source.shortname=OCHA` | Alta |
-| Cruz Roja IFRC | `source.shortname=IFRC` | Alta |
-| UNICEF Perú | `source.shortname=UNICEF` | Media |
-| Todos en español | `language.code=spa` + `country.iso3=PER` | Base |
+**URL base:** https://reliefweb.int/country/per  
+**API:** https://api.reliefweb.int/v2/reports  
 
-## Cómo correr
+## Cómo hacerlo
 
-```bash
-# Desde la raíz del repo
-python stage_a_extraction/integrante_1/extract_reliefweb.py
+### Opción A — Script (recomendado)
+Hay un script en el pipeline-completo del proyecto. Necesita:
+- Python + `pip install requests`
+- Llamar a la API con filtros: `country=PER`, `language=spa`, desde 2015
 
-# Con parámetros personalizados
-python stage_a_extraction/integrante_1/extract_reliefweb.py --limite 1000 --desde 2018-01-01
+### Opción B — Manual (si la API da problemas)
+1. Ir a https://reliefweb.int/country/per
+2. Filtrar por idioma: español
+3. Copiar el texto de los reportes más relevantes
+
+## Qué tipos de crisis priorizar
+
+- Inundaciones / El Niño (los más comunes en Perú)
+- Sismos / terremotos
+- Deslizamientos / huaicos
+- Sequías / heladas
+- Epidemias (dengue, etc.)
+
+Intentar tener al menos 100 textos de cada tipo.
+
+## Formato de salida
+
+Un archivo `reliefweb.jsonl` donde cada línea es:
+```json
+{"id": "rw-123", "fuente": "reliefweb", "titulo": "...", "fecha": "2023-03-15", "tipo_crisis": "inundacion", "texto": "El texto completo aquí..."}
 ```
 
-## Output esperado
+## Dónde subir los datos
 
-```jsonl
-{"id": "rw-123", "fuente": "reliefweb", "org": "OCHA", "fecha": "2023-03-15", "tipo_crisis": "inundacion", "region": "Piura", "titulo": "...", "texto": "...", "licencia": "cc_by", "fecha_extraccion": "2026-05-20"}
-```
+**Google Drive del equipo** → carpeta `data/raw/reliefweb/`  
+(los datos NO van en GitHub)
+
+## Qué subir al repo
+
+Solo este README actualizado con:
+- Cuántos textos extrajiste
+- Qué fechas cubren
+- Distribución por tipo de crisis
+- Problemas que encontraste
 
 ## Checklist
 
-- [ ] Script corre sin errores
-- [ ] Output tiene al menos 500 registros
-- [ ] Todos los registros tienen campo `texto` con >200 caracteres
-- [ ] Distribución de `tipo_crisis` revisada (no todo inundaciones)
-- [ ] Archivo subido a `data/raw/reliefweb/`
+- [ ] Al menos 500 textos con cuerpo completo (>200 caracteres)
+- [ ] Distribuidos en al menos 4 tipos de crisis
+- [ ] Archivo `reliefweb.jsonl` subido al Drive
+- [ ] README actualizado con el reporte final

@@ -1,46 +1,67 @@
-# Integrante 2 — INDECI
+# Integrante 2 — Raven99 · INDECI
 
-**Fuente:** Instituto Nacional de Defensa Civil + datosabiertos.gob.pe
-**Método:** Descarga manual de PDFs + extracción con pdfplumber + API CKAN
-**Output:** `data/raw/indeci/`
-**Meta:** 10–20 documentos procesados + datos CSV de emergencias
+## Qué te toca extraer
 
-## PDFs a descargar (manualmente)
+Guías, manuales y datos de emergencias del INDECI (Instituto Nacional de Defensa Civil).  
+Esta es la fuente peruana más importante — le da diferenciación local al proyecto.
 
-Ir a cada URL, descargar el PDF, y copiarlo a `data/raw/indeci/pdfs/`:
+## Fuentes a cubrir
 
-| Archivo a guardar como | URL | Verificar texto extraíble |
-|---|---|---|
-| `manual_edan.pdf` | https://www.indeci.gob.pe (buscar "Manual EDAN") | ✅ / ❌ |
-| `plan_nacional_grd.pdf` | https://www.indeci.gob.pe (buscar "Plan Nacional GRD") | ✅ / ❌ |
-| `guia_albergues.pdf` | https://www.indeci.gob.pe (buscar "Guía albergues") | ✅ / ❌ |
-| `protocolo_evacuacion.pdf` | https://www.indeci.gob.pe (buscar "evacuación") | ✅ / ❌ |
+### PDFs (descargar manualmente)
 
-**Verificar si el texto es extraíble:**
-1. Abrir el PDF
-2. Ctrl+A → Ctrl+C en cualquier página con texto
-3. Pegar en un editor: si aparece texto legible → ✅ extraíble
+Ir a https://www.indeci.gob.pe → sección Publicaciones:
 
-Si el PDF está escaneado (❌): anotar en la tabla y pasar al siguiente.
+| Qué buscar | Por qué sirve |
+|---|---|
+| Manual EDAN (Evaluación de Daños) | Procedimientos oficiales de respuesta |
+| Guía de albergues de emergencia | Derechos y procedimientos en albergues |
+| Plan Nacional de GRD | Marco general de gestión de riesgos |
+| Guía de evacuación | Protocolos por tipo de desastre |
+| Boletines de emergencias | Casos reales recientes en Perú |
 
-## Datos abiertos (automatizado)
+**Antes de procesar cada PDF:** abrir, hacer Ctrl+A en una página y pegar en un bloc de notas.
+- Si aparece texto legible → se puede extraer con pdfplumber ✅  
+- Si no aparece nada → está escaneado ❌ (anotar y pasar al siguiente)
 
-```bash
-python stage_a_extraction/integrante_2/extract_indeci.py
+### Datos abiertos (CSV)
+
+Ir a https://www.datosabiertos.gob.pe/organization/indeci  
+Buscar datasets sobre: emergencias, desastres, damnificados  
+Descargar los CSV disponibles y anotar qué columnas tienen texto útil.
+
+## Cómo extraer texto de los PDFs
+
+```python
+import pdfplumber
+
+with pdfplumber.open("manual_edan.pdf") as pdf:
+    for i, pagina in enumerate(pdf.pages):
+        texto = pagina.extract_text()
+        if texto and len(texto) > 100:
+            print(f"Página {i+1}: {len(texto)} caracteres")
 ```
 
-## Output esperado
+## Formato de salida
 
+Un archivo `indeci.jsonl`:
+```json
+{"id": "indeci-edan-p12", "fuente": "indeci_pdf", "documento": "manual_edan", "pagina": 12, "tipo_crisis": "general", "texto": "El proceso de evaluación..."}
 ```
-data/raw/indeci/
-├── pdfs/               ← PDFs descargados (en .gitignore)
-├── indeci_pdfs.jsonl   ← texto extraído de los PDFs
-└── indeci_csv.jsonl    ← datos de la API de datos abiertos
-```
+
+## Dónde subir los datos
+
+**Google Drive del equipo** → carpeta `data/raw/indeci/`
+
+## Qué subir al repo
+
+Solo este README actualizado con:
+- Lista de PDFs procesados (nombre, páginas útiles, ¿tenía texto o estaba escaneado?)
+- Lista de CSVs descargados con descripción de columnas
+- Total de textos extraídos
 
 ## Checklist
 
-- [ ] Al menos 5 PDFs descargados y verificados como extraíbles
-- [ ] Script de extracción PDF corrido sin errores
-- [ ] Datos CSV de la API descargados
-- [ ] Reportar cuántos PDFs estaban escaneados (no extraíbles)
+- [ ] Al menos 5 PDFs revisados (aunque sean escaneados — documentar cuáles)
+- [ ] Al menos 3 PDFs con texto extraíble procesados
+- [ ] CSVs de datos abiertos descargados y explorados
+- [ ] README actualizado con reporte final
