@@ -1,4 +1,4 @@
-# Integrante 1 — Emilio · ReliefWeb
+# Integrante 1 — Johana · ReliefWeb
 
 ## Qué te toca extraer
 

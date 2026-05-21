@@ -1,4 +1,4 @@
-# Integrante 5 — Maskuyruru · ONGs + HDX + CENEPRED
+# Integrante 5 — Milton · ONGs + HDX + CENEPRED
 
 ## Qué te toca extraer
 

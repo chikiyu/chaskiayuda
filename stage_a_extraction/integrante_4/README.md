@@ -1,4 +1,4 @@
-# Integrante 4 — Maskuyruru · Programas de Gobierno
+# Integrante 4 — Astrid · Programas de Gobierno
 
 ## Qué te toca extraer
 
